@@ -4,16 +4,16 @@
 typedef struct		node
 {
   void			*data;
-  struct node		*next;
   struct node		*prev;
+  struct node		*next;
 }			node;
 
 typedef struct		deque
 {
   /* Properties: */
   unsigned int		len;
-  struct node		*front;
-  struct node		*back;
+  struct node		*head;
+  struct node		*end;
 
   /* Methods: */
   /* --- Modifiers --- */
@@ -22,7 +22,7 @@ typedef struct		deque
   void			(*pop_front)(struct deque *th);
   void			(*pop_back)(struct deque *th);
   void			(*insert)(struct deque *th, unsigned int n, void *data);
-  void			(*erase)(struct deque *th, unsigned int start, unsigned int end);
+  void			(*erase)(struct deque *th, unsigned int n);
   void			(*clear)(struct deque *th);
 
   /* --- Element access --- */
@@ -33,10 +33,13 @@ typedef struct		deque
   /* --- Capacity --- */
   unsigned int		(*size)(struct deque *th);
   unsigned int		(*empty)(struct deque *th);
+
+  /* --- Debug --- */
+  void			(*show)(struct deque *th, void (*display)(unsigned int n, void *data));
 }			deque;
 
-void			deque_init(struct deque *th);
 struct deque *		new_deque(void);
+void			deque_init(struct deque *th);
 void			deque_destroy(struct deque *th);
 
 #endif /* _DEQUE_H_ */
