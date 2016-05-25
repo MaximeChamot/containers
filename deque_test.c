@@ -74,6 +74,33 @@ int		main()
   printf("back [0]:[%d]\n", *(unsigned int *)(new_deque.back(&new_deque)));
   printf("----------\n\n");
 
+  printf("test7: insert 1 element (at position 5)\n");
+  new_deque.insert(&new_deque, 5, &tab[5]);
+  new_deque.show(&new_deque, &display);
+  printf("empty [0]:[%d]\n", new_deque.empty(&new_deque));
+  printf("size [11]:[%d]\n", new_deque.size(&new_deque));
+  printf("front [9]:[%d]\n", *(unsigned int *)(new_deque.front(&new_deque)));
+  printf("back [0]:[%d]\n", *(unsigned int *)(new_deque.back(&new_deque)));
+  printf("----------\n\n");
+
+  printf("test8: insert 1 element (at position 0)\n");
+  new_deque.insert(&new_deque, 0, &tab[5]);
+  new_deque.show(&new_deque, &display);
+  printf("empty [0]:[%d]\n", new_deque.empty(&new_deque));
+  printf("size [12]:[%d]\n", new_deque.size(&new_deque));
+  printf("front [5]:[%d]\n", *(unsigned int *)(new_deque.front(&new_deque)));
+  printf("back [0]:[%d]\n", *(unsigned int *)(new_deque.back(&new_deque)));
+  printf("----------\n\n");
+
+  printf("test7: insert 1 element (at position 50)\n");
+  new_deque.insert(&new_deque, 50, &tab[5]);
+  new_deque.show(&new_deque, &display);
+  printf("empty [0]:[%d]\n", new_deque.empty(&new_deque));
+  printf("size [13]:[%d]\n", new_deque.size(&new_deque));
+  printf("front [5]:[%d]\n", *(unsigned int *)(new_deque.front(&new_deque)));
+  printf("back [5]:[%d]\n", *(unsigned int *)(new_deque.back(&new_deque)));
+  printf("----------\n\n");
+
   deque_destroy(&new_deque);
   return (0);
 }

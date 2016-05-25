@@ -1,4 +1,5 @@
 #include <stdlib.h>
+#include <stdio.h>
 #include "deque.h"
 
 /* Methods declaration */
@@ -27,7 +28,7 @@ static void		show(struct deque *th, void (*display)(unsigned int n, void *data))
 static void		init_properties(struct deque *th);
 static void		init_method_ptr(struct deque *th);
 static struct node *	create_node(void *data);
-static struct node *	get_node_at(struct node *th, unsigned int n);
+static struct node *	get_node_at(struct node *node, unsigned int n);
 static void		delete_node(struct deque *th, struct node *node);
 
 /* Constructor */
@@ -112,13 +113,29 @@ static void		pop_back(struct deque *th)
 
 static void		insert(struct deque *th, unsigned int n, void *data)
 {
+  struct node		*new_node;
   struct node		*it;
   unsigned int		i;
 
   if (th != NULL)
     {
-      it = get_node_at(th->head, n);
-      //add_node(th, it);
+      if (n == 0)
+	th->push_front(th, data);
+      else if (n >= th->size(th))
+	th->push_back(th, data);
+      else
+	{
+	  it = get_node_at(th->head, n - 1);
+	  if ((new_node = create_node(data)) != NULL)
+	    {
+	      new_node->prev = it;
+	      new_node->next = it->next;
+	      if (it->next != NULL)
+		it->next->prev = new_node;
+	      it->next = new_node;
+	      th->len++;
+	    }
+	}
     }
 }
 
@@ -254,21 +271,21 @@ static struct node *	create_node(void *data)
   return (new_node);
 }
 
-static struct node *	get_node_at(struct node *th, unsigned int n)
+static struct node *	get_node_at(struct node *node, unsigned int n)
 {
   struct node		*it;
   unsigned int		i;
 
-  if (th != NULL)
+  if (node != NULL)
     {
-      it = th;
+      it = node;
       i = 0;
       while (it->next != NULL && i < n)
 	{
 	  it = it->next;
 	  i++;
 	}
-      return (it->data);
+      return (it);
     }
   return (NULL);
 }
@@ -280,17 +297,14 @@ static void		delete_node(struct deque *th, struct node *node)
   if (node != NULL)
     {
       it = node;
-
       if (node->prev != NULL)
 	node->prev->next = node->next;
       else
 	th->head = node->next;
-
       if (node->next != NULL)
 	  node->next->prev = node->prev;
       else
 	th->end = node->prev;
-
       free(it);
       th->len--;
     }
