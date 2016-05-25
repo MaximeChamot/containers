@@ -146,7 +146,6 @@ static void		erase(struct deque *th, unsigned int n)
   if (th != NULL)
     {
       node = get_node_at(th->head, n);
-      printf("**********\n ---> Debug: [%d]\n**********\n", *(unsigned int *)(node->data));
       delete_node(th, node);
     }
 }

@@ -147,13 +147,13 @@ int		main()
   printf("back [0]:[%d]\n", *(unsigned int *)(new_deque.back(&new_deque)));
   printf("----------\n\n");
 
-  printf("test15: erase nodes (from 0 to 2)\n");
+  printf("test15: erase nodes (from 1 to 3)\n");
   for (i = 1; i < 4; ++i)
-    new_deque.erase(&new_deque, i);
+    new_deque.erase(&new_deque, 1);
   new_deque.show(&new_deque, &display);
   printf("empty [0]:[%d]\n", new_deque.empty(&new_deque));
   printf("size [2]:[%d]\n", new_deque.size(&new_deque));
-  printf("front [1]:[%d]\n", *(unsigned int *)(new_deque.front(&new_deque)));
+  printf("front [4]:[%d]\n", *(unsigned int *)(new_deque.front(&new_deque)));
   printf("back [0]:[%d]\n", *(unsigned int *)(new_deque.back(&new_deque)));
   printf("----------\n\n");
 
