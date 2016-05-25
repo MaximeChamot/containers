@@ -12,21 +12,21 @@ typedef struct		stack
   /* --- Modifiers --- */
   void			(*push)(struct stack *th, void *data);
   void			(*pop)(struct stack *th);
-  void			(*clear)(struct deque *th);
+  void			(*clear)(struct stack *th);
 
   /* --- Element access --- */
-  void *		(*top)(struct deque *th);
+  void *		(*top)(struct stack *th);
 
   /* --- Capacity --- */
   unsigned int		(*size)(struct stack *th);
   unsigned int		(*empty)(struct stack *th);
 
   /* --- Debug --- */
-  void			(*show)(struct deque *th, void (*display)(unsigned int n, void *data));
+  void			(*show)(struct stack *th, void (*display)(unsigned int n, void *data));
 }			stack;
 
-struct deque *		new_stack(void);
-void			stack_init(struct deque *th);
-void			stack_destroy(struct deque *th);
+struct stack *		new_stack(void);
+void			stack_init(struct stack *th);
+void			stack_destroy(struct stack *th);
 
 #endif /* _STACK_H_ */
