@@ -1,47 +1,47 @@
 #include <stdlib.h>
 #include <stdio.h>
-#include "deque.h"
+#include "list.h"
 
 /* Methods declaration */
 /* --- Modifiers --- */
-static void		push_front(struct deque *th, void *data);
-static void		push_back(struct deque *th, void *data);
-static void		pop_front(struct deque *th);
-static void		pop_back(struct deque *th);
-static void		insert(struct deque *th, unsigned int n, void *data);
-static void		erase(struct deque *th, unsigned int n);
-static void		clear(struct deque *th);
+static void		push_front(struct list *th, void *data);
+static void		push_back(struct list *th, void *data);
+static void		pop_front(struct list *th);
+static void		pop_back(struct list *th);
+static void		insert(struct list *th, unsigned int n, void *data);
+static void		erase(struct list *th, unsigned int n);
+static void		clear(struct list *th);
 
 /* --- Element access --- */
-static void *		front(struct deque *th);
-static void *		back(struct deque *th);
-static void *		at(struct deque *th, unsigned int n);
+static void *		front(struct list *th);
+static void *		back(struct list *th);
+static void *		at(struct list *th, unsigned int n);
 
 /* --- Capacity --- */
-static unsigned int	size(struct deque *th);
-static unsigned int	empty(struct deque *th);
+static unsigned int	size(struct list *th);
+static unsigned int	empty(struct list *th);
 
 /* --- Debug --- */
-static void		show(struct deque *th, void (*display)(unsigned int n, void *data));
+static void		show(struct list *th, void (*display)(unsigned int n, void *data));
 
 /* Private functions declaration */
-static void		init_properties(struct deque *th);
-static void		init_method_ptr(struct deque *th);
+static void		init_properties(struct list *th);
+static void		init_method_ptr(struct list *th);
 static struct node *	create_node(void *data);
 static struct node *	get_node_at(struct node *node, unsigned int n);
-static void		delete_node(struct deque *th, struct node *node);
+static void		delete_node(struct list *th, struct node *node);
 
 /* Constructor */
-struct deque *          new_deque(void)
+struct list *		new_list(void)
 {
-  struct deque		*new_deque;
+  struct list		*new_list;
 
-  if ((new_deque = (struct deque *)malloc(sizeof(struct deque))) != NULL)
-    deque_init(new_deque);
-  return (new_deque);
+  if ((new_list = (struct list *)malloc(sizeof(struct list))) != NULL)
+    list_init(new_list);
+  return (new_list);
 }
 
-void                    deque_init(struct deque *th)
+void                    list_init(struct list *th)
 {
   if (th != NULL)
     {
@@ -51,7 +51,7 @@ void                    deque_init(struct deque *th)
 }
 
 /* Destructor */
-void                    deque_destroy(struct deque *th)
+void                    list_destroy(struct list *th)
 {
   if (th != NULL)
     {
@@ -63,7 +63,7 @@ void                    deque_destroy(struct deque *th)
 /* Methods */
 
 /* --- Modifiers --- */
-static void		push_front(struct deque *th, void *data)
+static void		push_front(struct list *th, void *data)
 {
   struct node		*new_node;
 
@@ -81,7 +81,7 @@ static void		push_front(struct deque *th, void *data)
     }
 }
 
-static void		push_back(struct deque *th, void *data)
+static void		push_back(struct list *th, void *data)
 {
   struct node		*new_node;
 
@@ -99,19 +99,19 @@ static void		push_back(struct deque *th, void *data)
     }
 }
 
-static void		pop_front(struct deque *th)
+static void		pop_front(struct list *th)
 {
   if (th != NULL && th->head != NULL)
     delete_node(th, th->head);
 }
 
-static void		pop_back(struct deque *th)
+static void		pop_back(struct list *th)
 {
   if (th != NULL && th->end != NULL)
     delete_node(th, th->end);
 }
 
-static void		insert(struct deque *th, unsigned int n, void *data)
+static void		insert(struct list *th, unsigned int n, void *data)
 {
   struct node		*new_node;
   struct node		*it;
@@ -139,7 +139,7 @@ static void		insert(struct deque *th, unsigned int n, void *data)
     }
 }
 
-static void		erase(struct deque *th, unsigned int n)
+static void		erase(struct list *th, unsigned int n)
 {
   struct node		*node;
 
@@ -150,7 +150,7 @@ static void		erase(struct deque *th, unsigned int n)
     }
 }
 
-static void		clear(struct deque *th)
+static void		clear(struct list *th)
 {
   if (th != NULL)
     {
@@ -160,21 +160,21 @@ static void		clear(struct deque *th)
 }
 
 /* --- Element access --- */
-static void *		front(struct deque *th)
+static void *		front(struct list *th)
 {
   if (th != NULL && th->head != NULL)
     return (th->head->data);
   return (NULL);
 }
 
-static void *		back(struct deque *th)
+static void *		back(struct list *th)
 {
   if (th != NULL && th->end != NULL)
     return (th->end->data);
   return (NULL);
 }
 
-static void *		at(struct deque *th, unsigned int n)
+static void *		at(struct list *th, unsigned int n)
 {
   struct node		*it;
   unsigned int		i;
@@ -194,7 +194,7 @@ static void *		at(struct deque *th, unsigned int n)
 }
 
 /* --- Capacity --- */
-static unsigned int	size(struct deque *th)
+static unsigned int	size(struct list *th)
 {
   if (th != NULL)
     return (th->len);
@@ -209,7 +209,7 @@ static unsigned int	empty(struct deque *th)
 }
 
 /* --- Debug --- */
-static void		show(struct deque *th, void (*display)(unsigned int n, void *data))
+static void		show(struct list *th, void (*display)(unsigned int n, void *data))
 {
   struct node		*it;
   unsigned int		i;
@@ -228,7 +228,7 @@ static void		show(struct deque *th, void (*display)(unsigned int n, void *data))
 }
 
 /* Private functions */
-static void		init_properties(struct deque *th)
+static void		init_properties(struct list *th)
 {
   if (th != NULL)
     {
@@ -238,7 +238,7 @@ static void		init_properties(struct deque *th)
     }
 }
 
-static void		init_method_ptr(struct deque *th)
+static void		init_method_ptr(struct list *th)
 {
   if (th != NULL)
     {
@@ -290,7 +290,7 @@ static struct node *	get_node_at(struct node *node, unsigned int n)
   return (NULL);
 }
 
-static void		delete_node(struct deque *th, struct node *node)
+static void		delete_node(struct list *th, struct node *node)
 {
   struct node           *it;
 

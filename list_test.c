@@ -9,7 +9,7 @@ void            display(unsigned int n, void *data)
 
 int		main()
 {
-  struct deque	new_deque;		
+  struct list	new_deque;		
   unsigned int	tab[] = {0, 1, 2, 3, 4, 5, 6, 7, 8, 9};
   int		i = 0;
 

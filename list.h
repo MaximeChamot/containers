@@ -8,7 +8,7 @@ typedef struct		node
   struct node		*next;
 }			node;
 
-typedef struct		deque
+typedef struct		list
 {
   /* Properties: */
   unsigned int		len;
@@ -17,29 +17,29 @@ typedef struct		deque
 
   /* Methods: */
   /* --- Modifiers --- */
-  void			(*push_front)(struct deque *th, void *data);
-  void			(*push_back)(struct deque *th, void *data);
-  void			(*pop_front)(struct deque *th);
-  void			(*pop_back)(struct deque *th);
-  void			(*insert)(struct deque *th, unsigned int n, void *data);
-  void			(*erase)(struct deque *th, unsigned int n);
-  void			(*clear)(struct deque *th);
+  void			(*push_front)(struct list *th, void *data);
+  void			(*push_back)(struct list *th, void *data);
+  void			(*pop_front)(struct list *th);
+  void			(*pop_back)(struct list *th);
+  void			(*insert)(struct list *th, unsigned int n, void *data);
+  void			(*erase)(struct list *th, unsigned int n);
+  void			(*clear)(struct list *th);
 
   /* --- Element access --- */
-  void *		(*front)(struct deque *th);
-  void *		(*back)(struct deque *th);
-  void *		(*at)(struct deque *th, unsigned int n);
+  void *		(*front)(struct list *th);
+  void *		(*back)(struct list *th);
+  void *		(*at)(struct list *th, unsigned int n);
 
   /* --- Capacity --- */
-  unsigned int		(*size)(struct deque *th);
-  unsigned int		(*empty)(struct deque *th);
+  unsigned int		(*size)(struct list *th);
+  unsigned int		(*empty)(struct list *th);
 
   /* --- Debug --- */
-  void			(*show)(struct deque *th, void (*display)(unsigned int n, void *data));
-}			deque;
+  void			(*show)(struct list *th, void (*display)(unsigned int n, void *data));
+}			list;
 
-struct deque *		new_deque(void);
-void			deque_init(struct deque *th);
-void			deque_destroy(struct deque *th);
+struct list *		new_list(void);
+void			list_init(struct list *th);
+void			list_destroy(struct list *th);
 
 #endif /* _DEQUE_H_ */
