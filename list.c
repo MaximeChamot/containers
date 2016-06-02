@@ -75,7 +75,7 @@ static void		push_front(struct list *th, void *data)
 	  th->head->prev = new_node;
 	}
       else
-	th->end = new_node;
+	th->tail = new_node;
       th->head = new_node;
       th->len++;
     }
@@ -87,14 +87,14 @@ static void		push_back(struct list *th, void *data)
 
   if (th != NULL && (new_node = create_node(data)) != NULL)
     {
-      if (th->end != NULL)
+      if (th->tail != NULL)
 	{
-	  new_node->prev = th->end;
-	  th->end->next = new_node;
+	  new_node->prev = th->tail;
+	  th->tail->next = new_node;
 	}
       else
 	th->head = new_node;
-      th->end = new_node;
+      th->tail = new_node;
       th->len++;
     }
 }
@@ -107,8 +107,8 @@ static void		pop_front(struct list *th)
 
 static void		pop_back(struct list *th)
 {
-  if (th != NULL && th->end != NULL)
-    delete_node(th, th->end);
+  if (th != NULL && th->tail != NULL)
+    delete_node(th, th->tail);
 }
 
 static void		insert(struct list *th, unsigned int n, void *data)
@@ -169,8 +169,8 @@ static void *		front(struct list *th)
 
 static void *		back(struct list *th)
 {
-  if (th != NULL && th->end != NULL)
-    return (th->end->data);
+  if (th != NULL && th->tail != NULL)
+    return (th->tail->data);
   return (NULL);
 }
 
@@ -234,7 +234,7 @@ static void		init_properties(struct list *th)
     {
       th->len = 0;
       th->head = NULL;
-      th->end = NULL;
+      th->tail = NULL;
     }
 }
 
@@ -304,7 +304,7 @@ static void		delete_node(struct list *th, struct node *node)
       if (node->next != NULL)
 	  node->next->prev = node->prev;
       else
-	th->end = node->prev;
+	th->tail = node->prev;
       free(it);
       th->len--;
     }
