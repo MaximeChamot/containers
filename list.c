@@ -201,7 +201,7 @@ static unsigned int	size(struct list *th)
   return (0);
 }
 
-static unsigned int	empty(struct deque *th)
+static unsigned int	empty(struct list *th)
 {
   if (th != NULL && th->len == 0)
     return (1);

@@ -1,12 +1,7 @@
-#ifndef _DEQUE_H_
-# define _DEQUE_H_
+#ifndef _LIST_H_
+# define _LIST_H_
 
-typedef struct		node
-{
-  void			*data;
-  struct node		*prev;
-  struct node		*next;
-}			node;
+# include "node.h"
 
 typedef struct		list
 {
