@@ -147,7 +147,7 @@ int		main()
   printf("back [0]:[%d]\n", *(unsigned int *)(new_list.back(&new_list)));
   printf("----------\n\n");
 
-  printf("test15: erase nodes (from 1 to 3)\n");
+  printf("test16: erase nodes (from 1 to 3)\n");
   for (i = 1; i < 4; ++i)
     new_list.erase(&new_list, 1);
   new_list.show(&new_list, &display);

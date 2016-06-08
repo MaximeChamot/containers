@@ -177,18 +177,12 @@ static void *		back(struct list *th)
 static void *		at(struct list *th, unsigned int n)
 {
   struct node		*it;
-  unsigned int		i;
 
-  if (th != NULL)
+  if (th != NULL && th->head != NULL)
     {
-      it = th->head;
-      i = 0;
-      while (it->next != NULL && i < n)
-	{
-	  it = it->next;
-	  i++;
-	}
-      return (it->data);
+      it = get_node_at(th->head, n);
+      if (it != NULL)
+	return (it->data);
     }
   return (NULL);
 }
@@ -274,16 +268,14 @@ static struct node *	create_node(void *data)
 static struct node *	get_node_at(struct node *node, unsigned int n)
 {
   struct node		*it;
-  unsigned int		i;
 
   if (node != NULL)
     {
       it = node;
-      i = 0;
-      while (it->next != NULL && i < n)
+      while (it->next != NULL && n > 0)
 	{
 	  it = it->next;
-	  i++;
+	  n--;
 	}
       return (it);
     }
