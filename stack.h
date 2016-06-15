@@ -1,5 +1,5 @@
-#ifndef _STACK_H_
-# define _STACK_H_
+#ifndef STACK_H_
+# define STACK_H_
 
 # include		"list.h"
 
@@ -29,4 +29,4 @@ struct stack *		new_stack(void);
 void			stack_init(struct stack *self);
 void			stack_destroy(struct stack *self);
 
-#endif /* _STACK_H_ */
+#endif /* STACK_H_ */
