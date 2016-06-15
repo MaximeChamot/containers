@@ -45,63 +45,63 @@ void                    stack_destroy(struct stack *self)
 {
   if (self != NULL)
     {
-      self->clear(self);
+      list_destroy(&self->list);
       init_properties(self);
     }
 }
 
-/* Meselfods */
+/* Methods */
 /* --- Modifiers --- */
 static void		push(struct stack *self, void *data)
 {
   if (self != NULL)
-    self->list->push_front(self->list, data);
+    self->list.push_front(&self->list, data);
 }
 
 static void		pop(struct stack *self)
 {
   if (self != NULL)
-    self->list->pop_front(self->list);
+    self->list.pop_front(&self->list);
 }
 
 static void		clear(struct stack *self)
 {
   if (self != NULL)
-    self->list->clear(self->list);
+    self->list.clear(&self->list);
 }
 
 /* --- Element access --- */
 static void *		top(struct stack *self)
 {
   if (self != NULL)
-    return (self->list->front(self->list));
+    return (self->list.front(&self->list));
 }
 
 /* --- Capacity --- */
 static unsigned int	size(struct stack *self)
 {
   if (self != NULL)
-    return (self->list->size(self->list));
+    return (self->list.size(&self->list));
 }
 
 static unsigned int	empty(struct stack *self)
 {
   if (self != NULL)
-    return (self->list->empty(self->list));
+    return (self->list.empty(&self->list));
 }
 
 /* --- Debug --- */
 static void		show(struct stack *self, void (*display)(unsigned int n, void *data))
 {
   if (self != NULL && display != NULL)
-    self->list->show(self->list, display);
+    self->list.show(&self->list, display);
 }
 
 /* Private functions */
 static void		init_properties(struct stack *self)
 {
   if (self != NULL)
-    self->list = new_list();
+    list_init(&self->list);
 }
 
 static void		init_method_ptr(struct stack *self)

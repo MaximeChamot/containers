@@ -5,25 +5,25 @@
 
 typedef struct		queue {
   /* Properties */
-  struct list		*list;
+  struct list		list;
 
   /* Methods */
   /* --- Modifiers --- */
-  void			(*push)(struct stack *self, void *data);
-  void			(*pop)(struct stack *self);
-  void			(*clear)(struct stack *self);
+  void			(*push)(struct queue *self, void *data);
+  void			(*pop)(struct queue *self);
+  void			(*clear)(struct queue *self);
 
   /* --- Element access --- */
-  void *		(*front)(struct stack *self);
-  void *		(*back)(struct stack *self);
+  void *		(*front)(struct queue *self);
+  void *		(*back)(struct queue *self);
 
   /* --- Capacity --- */
-  unsigned int		(*size)(struct stack *self);
-  unsigned int		(*empty)(struct stack *self);
+  unsigned int		(*size)(struct queue *self);
+  unsigned int		(*empty)(struct queue *self);
 
   /* --- Debug --- */
-  void			(*show)(struct stack *self, void(*display)(unsigned int n, void *data));
-}
+  void			(*show)(struct queue *self, void(*display)(unsigned int n, void *data));
+}			queue;
 
 struct queue *		new_queue(void);
 void			queue_init(struct queue *self);

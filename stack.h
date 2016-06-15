@@ -6,7 +6,7 @@
 typedef struct		stack
 {
   /* Properties */
-  struct list		*list;
+  struct list		list;
 
   /* Methods */
   /* --- Modifiers --- */
