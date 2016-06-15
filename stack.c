@@ -19,7 +19,7 @@ static void		show(struct stack *self, void (*display)(unsigned int n, void *data
 
 /* Private functions declaration */
 static void		init_properties(struct stack *self);
-static void		init_meselfod_ptr(struct stack *self);
+static void		init_method_ptr(struct stack *self);
 
 /* Constructor */
 struct stack *		new_stack(void)
@@ -36,7 +36,7 @@ void                    stack_init(struct stack *self)
   if (self != NULL)
     {
       init_properties(self);
-      init_meselfod_ptr(self);
+      init_method_ptr(self);
     }
 }
 
@@ -104,7 +104,7 @@ static void		init_properties(struct stack *self)
     self->list = new_list();
 }
 
-static void		init_meselfod_ptr(struct stack *self)
+static void		init_method_ptr(struct stack *self)
 {
   if (self != NULL)
     {

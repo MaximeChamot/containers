@@ -1,7 +1,7 @@
 #include <stdlib.h>
 #include "list.h"
 
-/* Meselfods declaration */
+/* Methods declaration */
 /* --- Modifiers --- */
 static void		push_front(struct list *self, void *data);
 static void		push_back(struct list *self, void *data);
@@ -25,7 +25,7 @@ static void		show(struct list *self, void (*display)(unsigned int n, void *data)
 
 /* Private functions declaration */
 static void		init_properties(struct list *self);
-static void		init_meselfod_ptr(struct list *self);
+static void		init_method_ptr(struct list *self);
 static struct node *	create_node(void *data);
 static struct node *	get_node_at(struct node *node, unsigned int n);
 static void		delete_node(struct list *self, struct node *node);
@@ -45,7 +45,7 @@ void                    list_init(struct list *self)
   if (self != NULL)
     {
       init_properties(self);
-      init_meselfod_ptr(self);
+      init_method_ptr(self);
     }
 }
 
@@ -59,7 +59,7 @@ void                    list_destroy(struct list *self)
     }
 }
 
-/* Meselfods */
+/* Methods */
 /* --- Modifiers --- */
 static void		push_front(struct list *self, void *data)
 {
@@ -230,7 +230,7 @@ static void		init_properties(struct list *self)
     }
 }
 
-static void		init_meselfod_ptr(struct list *self)
+static void		init_method_ptr(struct list *self)
 {
   if (self != NULL)
     {
