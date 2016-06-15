@@ -1,5 +1,5 @@
-#ifndef _NODE_H_
-# define _NODE_H_
+#ifndef NODE_H_
+# define NODE_H_
 
 typedef struct		node
 {
@@ -8,4 +8,4 @@ typedef struct		node
   struct node		*next;
 }			node;
 
-#endif /* _NODE_H_ */
+#endif /* NODE_H_ */

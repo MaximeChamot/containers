@@ -1,5 +1,5 @@
-#ifndef _LIST_H_
-# define _LIST_H_
+#ifndef LIST_H_
+# define LIST_H_
 
 # include		"node.h"
 
@@ -37,4 +37,4 @@ struct list *		new_list(void);
 void			list_init(struct list *self);
 void			list_destroy(struct list *self);
 
-#endif /* _LIST_H_ */
+#endif /* LIST_H_ */
