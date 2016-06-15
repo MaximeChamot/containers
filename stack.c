@@ -3,23 +3,23 @@
 
 /* Methods declaration */
 /* --- Modifiers --- */
-static void		push(struct stack *that, void *data);
-static void		pop(struct stack *that);
-static void		clear(struct stack *that);
+static void		push(struct stack *self, void *data);
+static void		pop(struct stack *self);
+static void		clear(struct stack *self);
 
 /* --- Element access --- */
-static void *		top(struct stack *that);
+static void *		top(struct stack *self);
 
 /* --- Capacity --- */
-static unsigned int	size(struct stack *that);
-static unsigned int	empty(struct stack *that);
+static unsigned int	size(struct stack *self);
+static unsigned int	empty(struct stack *self);
 
 /* --- Debug --- */
-static void		show(struct stack *that, void (*display)(unsigned int n, void *data));
+static void		show(struct stack *self, void (*display)(unsigned int n, void *data));
 
 /* Private functions declaration */
-static void		init_properties(struct stack *that);
-static void		init_methatod_ptr(struct stack *that);
+static void		init_properties(struct stack *self);
+static void		init_meselfod_ptr(struct stack *self);
 
 /* Constructor */
 struct stack *		new_stack(void)
@@ -31,89 +31,89 @@ struct stack *		new_stack(void)
   return (new_stack);
 }
 
-void                    stack_init(struct stack *that)
+void                    stack_init(struct stack *self)
 {
-  if (that != NULL)
+  if (self != NULL)
     {
-      init_properties(that);
-      init_methatod_ptr(that);
+      init_properties(self);
+      init_meselfod_ptr(self);
     }
 }
 
 /* Destructor */
-void                    stack_destroy(struct stack *that)
+void                    stack_destroy(struct stack *self)
 {
-  if (that != NULL)
+  if (self != NULL)
     {
-      that->clear(that);
-      init_properties(that);
+      self->clear(self);
+      init_properties(self);
     }
 }
 
-/* Methatods */
+/* Meselfods */
 /* --- Modifiers --- */
-static void		push(struct stack *that, void *data)
+static void		push(struct stack *self, void *data)
 {
-  if (that != NULL)
-    that->list->push_front(that->list, data);
+  if (self != NULL)
+    self->list->push_front(self->list, data);
 }
 
-static void		pop(struct stack *that)
+static void		pop(struct stack *self)
 {
-  if (that != NULL)
-    that->list->pop_front(that->list);
+  if (self != NULL)
+    self->list->pop_front(self->list);
 }
 
-static void		clear(struct stack *that)
+static void		clear(struct stack *self)
 {
-  if (that != NULL)
-    that->list->clear(that->list);
+  if (self != NULL)
+    self->list->clear(self->list);
 }
 
 /* --- Element access --- */
-static void *		top(struct stack *that)
+static void *		top(struct stack *self)
 {
-  if (that != NULL)
-    return (that->list->front(that->list));
+  if (self != NULL)
+    return (self->list->front(self->list));
 }
 
 /* --- Capacity --- */
-static unsigned int	size(struct stack *that)
+static unsigned int	size(struct stack *self)
 {
-  if (that != NULL)
-    return (that->list->size(that->list));
+  if (self != NULL)
+    return (self->list->size(self->list));
 }
 
-static unsigned int	empty(struct stack *that)
+static unsigned int	empty(struct stack *self)
 {
-  if (that != NULL)
-    return (that->list->empty(that->list));
+  if (self != NULL)
+    return (self->list->empty(self->list));
 }
 
 /* --- Debug --- */
-static void		show(struct stack *that, void (*display)(unsigned int n, void *data))
+static void		show(struct stack *self, void (*display)(unsigned int n, void *data))
 {
-  if (that != NULL && display != NULL)
-    that->list->show(that->list, display);
+  if (self != NULL && display != NULL)
+    self->list->show(self->list, display);
 }
 
 /* Private functions */
-static void		init_properties(struct stack *that)
+static void		init_properties(struct stack *self)
 {
-  if (that != NULL)
-    th->list = new_list();
+  if (self != NULL)
+    self->list = new_list();
 }
 
-static void		init_methatod_ptr(struct stack *that)
+static void		init_meselfod_ptr(struct stack *self)
 {
-  if (that != NULL)
+  if (self != NULL)
     {
-      that->push = &push_front;
-      that->pop = &pop_front;
-      that->clear = &clear;
-      that->top = &top;
-      that->size = &size;
-      that->empty = &empty;
-      that->show = &show;
+      self->push = &push;
+      self->pop = &pop;
+      self->clear = &clear;
+      self->top = &top;
+      self->size = &size;
+      self->empty = &empty;
+      self->show = &show;
     }
 }

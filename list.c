@@ -1,35 +1,34 @@
 #include <stdlib.h>
-#include <stdio.h>
 #include "list.h"
 
-/* Methods declaration */
+/* Meselfods declaration */
 /* --- Modifiers --- */
-static void		push_front(struct list *th, void *data);
-static void		push_back(struct list *th, void *data);
-static void		pop_front(struct list *th);
-static void		pop_back(struct list *th);
-static void		insert(struct list *th, unsigned int n, void *data);
-static void		erase(struct list *th, unsigned int n);
-static void		clear(struct list *th);
+static void		push_front(struct list *self, void *data);
+static void		push_back(struct list *self, void *data);
+static void		pop_front(struct list *self);
+static void		pop_back(struct list *self);
+static void		insert(struct list *self, unsigned int n, void *data);
+static void		erase(struct list *self, unsigned int n);
+static void		clear(struct list *self);
 
 /* --- Element access --- */
-static void *		front(struct list *th);
-static void *		back(struct list *th);
-static void *		at(struct list *th, unsigned int n);
+static void *		front(struct list *self);
+static void *		back(struct list *self);
+static void *		at(struct list *self, unsigned int n);
 
 /* --- Capacity --- */
-static unsigned int	size(struct list *th);
-static unsigned int	empty(struct list *th);
+static unsigned int	size(struct list *self);
+static unsigned int	empty(struct list *self);
 
 /* --- Debug --- */
-static void		show(struct list *th, void (*display)(unsigned int n, void *data));
+static void		show(struct list *self, void (*display)(unsigned int n, void *data));
 
 /* Private functions declaration */
-static void		init_properties(struct list *th);
-static void		init_method_ptr(struct list *th);
+static void		init_properties(struct list *self);
+static void		init_meselfod_ptr(struct list *self);
 static struct node *	create_node(void *data);
 static struct node *	get_node_at(struct node *node, unsigned int n);
-static void		delete_node(struct list *th, struct node *node);
+static void		delete_node(struct list *self, struct node *node);
 
 /* Constructor */
 struct list *		new_list(void)
@@ -41,91 +40,90 @@ struct list *		new_list(void)
   return (new_list);
 }
 
-void                    list_init(struct list *th)
+void                    list_init(struct list *self)
 {
-  if (th != NULL)
+  if (self != NULL)
     {
-      init_properties(th);
-      init_method_ptr(th);
+      init_properties(self);
+      init_meselfod_ptr(self);
     }
 }
 
 /* Destructor */
-void                    list_destroy(struct list *th)
+void                    list_destroy(struct list *self)
 {
-  if (th != NULL)
+  if (self != NULL)
     {
-      th->clear(th);
-      init_properties(th);
+      self->clear(self);
+      init_properties(self);
     }
 }
 
-/* Methods */
-
+/* Meselfods */
 /* --- Modifiers --- */
-static void		push_front(struct list *th, void *data)
+static void		push_front(struct list *self, void *data)
 {
   struct node		*new_node;
 
-  if (th != NULL && (new_node = create_node(data)) != NULL)
+  if (self != NULL && (new_node = create_node(data)) != NULL)
     {
-      if (th->head != NULL)
+      if (self->head != NULL)
 	{
-	  new_node->next = th->head;
-	  th->head->prev = new_node;
+	  new_node->next = self->head;
+	  self->head->prev = new_node;
 	}
       else
-	th->tail = new_node;
-      th->head = new_node;
-      th->len++;
+	self->tail = new_node;
+      self->head = new_node;
+      self->len++;
     }
 }
 
-static void		push_back(struct list *th, void *data)
+static void		push_back(struct list *self, void *data)
 {
   struct node		*new_node;
 
-  if (th != NULL && (new_node = create_node(data)) != NULL)
+  if (self != NULL && (new_node = create_node(data)) != NULL)
     {
-      if (th->tail != NULL)
+      if (self->tail != NULL)
 	{
-	  new_node->prev = th->tail;
-	  th->tail->next = new_node;
+	  new_node->prev = self->tail;
+	  self->tail->next = new_node;
 	}
       else
-	th->head = new_node;
-      th->tail = new_node;
-      th->len++;
+	self->head = new_node;
+      self->tail = new_node;
+      self->len++;
     }
 }
 
-static void		pop_front(struct list *th)
+static void		pop_front(struct list *self)
 {
-  if (th != NULL && th->head != NULL)
-    delete_node(th, th->head);
+  if (self != NULL && self->head != NULL)
+    delete_node(self, self->head);
 }
 
-static void		pop_back(struct list *th)
+static void		pop_back(struct list *self)
 {
-  if (th != NULL && th->tail != NULL)
-    delete_node(th, th->tail);
+  if (self != NULL && self->tail != NULL)
+    delete_node(self, self->tail);
 }
 
-static void		insert(struct list *th, unsigned int n, void *data)
+static void		insert(struct list *self, unsigned int n, void *data)
 {
   struct node		*new_node;
   struct node		*it;
   unsigned int		i;
 
-  if (th != NULL)
+  if (self != NULL)
     {
       if (n == 0)
-	th->push_front(th, data);
-      else if (n >= th->size(th))
-	th->push_back(th, data);
+	self->push_front(self, data);
+      else if (n >= self->size(self))
+	self->push_back(self, data);
       else
 	{
-	  it = get_node_at(th->head, n - 1);
+	  it = get_node_at(self->head, n - 1);
 	  if ((new_node = create_node(data)) != NULL)
 	    {
 	      new_node->prev = it;
@@ -133,54 +131,54 @@ static void		insert(struct list *th, unsigned int n, void *data)
 	      if (it->next != NULL)
 		it->next->prev = new_node;
 	      it->next = new_node;
-	      th->len++;
+	      self->len++;
 	    }
 	}
     }
 }
 
-static void		erase(struct list *th, unsigned int n)
+static void		erase(struct list *self, unsigned int n)
 {
   struct node		*node;
 
-  if (th != NULL)
+  if (self != NULL)
     {
-      node = get_node_at(th->head, n);
-      delete_node(th, node);
+      node = get_node_at(self->head, n);
+      delete_node(self, node);
     }
 }
 
-static void		clear(struct list *th)
+static void		clear(struct list *self)
 {
-  if (th != NULL)
+  if (self != NULL)
     {
-      while (th->head)
-	delete_node(th, th->head);
+      while (self->head)
+	delete_node(self, self->head);
     }
 }
 
 /* --- Element access --- */
-static void *		front(struct list *th)
+static void *		front(struct list *self)
 {
-  if (th != NULL && th->head != NULL)
-    return (th->head->data);
+  if (self != NULL && self->head != NULL)
+    return (self->head->data);
   return (NULL);
 }
 
-static void *		back(struct list *th)
+static void *		back(struct list *self)
 {
-  if (th != NULL && th->tail != NULL)
-    return (th->tail->data);
+  if (self != NULL && self->tail != NULL)
+    return (self->tail->data);
   return (NULL);
 }
 
-static void *		at(struct list *th, unsigned int n)
+static void *		at(struct list *self, unsigned int n)
 {
   struct node		*it;
 
-  if (th != NULL && th->head != NULL)
+  if (self != NULL && self->head != NULL)
     {
-      it = get_node_at(th->head, n);
+      it = get_node_at(self->head, n);
       if (it != NULL)
 	return (it->data);
     }
@@ -188,29 +186,29 @@ static void *		at(struct list *th, unsigned int n)
 }
 
 /* --- Capacity --- */
-static unsigned int	size(struct list *th)
+static unsigned int	size(struct list *self)
 {
-  if (th != NULL)
-    return (th->len);
+  if (self != NULL)
+    return (self->len);
   return (0);
 }
 
-static unsigned int	empty(struct list *th)
+static unsigned int	empty(struct list *self)
 {
-  if (th != NULL && th->len == 0)
+  if (self != NULL && self->len == 0)
     return (1);
   return (0);
 }
 
 /* --- Debug --- */
-static void		show(struct list *th, void (*display)(unsigned int n, void *data))
+static void		show(struct list *self, void (*display)(unsigned int n, void *data))
 {
   struct node		*it;
   unsigned int		i;
 
-  if (th != NULL)
+  if (self != NULL && display != NULL)
     {
-      it = th->head;
+      it = self->head;
       i = 0;
       while (it != NULL)
 	{
@@ -222,33 +220,33 @@ static void		show(struct list *th, void (*display)(unsigned int n, void *data))
 }
 
 /* Private functions */
-static void		init_properties(struct list *th)
+static void		init_properties(struct list *self)
 {
-  if (th != NULL)
+  if (self != NULL)
     {
-      th->len = 0;
-      th->head = NULL;
-      th->tail = NULL;
+      self->len = 0;
+      self->head = NULL;
+      self->tail = NULL;
     }
 }
 
-static void		init_method_ptr(struct list *th)
+static void		init_meselfod_ptr(struct list *self)
 {
-  if (th != NULL)
+  if (self != NULL)
     {
-      th->push_front = &push_front;
-      th->push_back = &push_back;
-      th->pop_front = &pop_front;
-      th->pop_back = &pop_back;
-      th->insert = &insert;
-      th->erase = &erase;
-      th->clear = &clear;
-      th->front = &front;
-      th->back = &back;
-      th->at = at;
-      th->size = &size;
-      th->empty = &empty;
-      th->show = &show;
+      self->push_front = &push_front;
+      self->push_back = &push_back;
+      self->pop_front = &pop_front;
+      self->pop_back = &pop_back;
+      self->insert = &insert;
+      self->erase = &erase;
+      self->clear = &clear;
+      self->front = &front;
+      self->back = &back;
+      self->at = at;
+      self->size = &size;
+      self->empty = &empty;
+      self->show = &show;
     }
 }
 
@@ -282,7 +280,7 @@ static struct node *	get_node_at(struct node *node, unsigned int n)
   return (NULL);
 }
 
-static void		delete_node(struct list *th, struct node *node)
+static void		delete_node(struct list *self, struct node *node)
 {
   struct node           *it;
 
@@ -292,12 +290,12 @@ static void		delete_node(struct list *th, struct node *node)
       if (node->prev != NULL)
 	node->prev->next = node->next;
       else
-	th->head = node->next;
+	self->head = node->next;
       if (node->next != NULL)
 	  node->next->prev = node->prev;
       else
-	th->tail = node->prev;
+	self->tail = node->prev;
       free(it);
-      th->len--;
+      self->len--;
     }
 }

@@ -12,29 +12,29 @@ typedef struct		list
 
   /* Methods */
   /* --- Modifiers --- */
-  void			(*push_front)(struct list *that, void *data);
-  void			(*push_back)(struct list *that, void *data);
-  void			(*pop_front)(struct list *that);
-  void			(*pop_back)(struct list *that);
-  void			(*insert)(struct list *that, unsigned int n, void *data);
-  void			(*erase)(struct list *that, unsigned int n);
-  void			(*clear)(struct list *that);
+  void			(*push_front)(struct list *self, void *data);
+  void			(*push_back)(struct list *self, void *data);
+  void			(*pop_front)(struct list *self);
+  void			(*pop_back)(struct list *self);
+  void			(*insert)(struct list *self, unsigned int n, void *data);
+  void			(*erase)(struct list *self, unsigned int n);
+  void			(*clear)(struct list *self);
 
   /* --- Element access --- */
-  void *		(*front)(struct list *that);
-  void *		(*back)(struct list *that);
-  void *		(*at)(struct list *that, unsigned int n);
+  void *		(*front)(struct list *self);
+  void *		(*back)(struct list *self);
+  void *		(*at)(struct list *self, unsigned int n);
 
   /* --- Capacity --- */
-  unsigned int		(*size)(struct list *that);
-  unsigned int		(*empty)(struct list *that);
+  unsigned int		(*size)(struct list *self);
+  unsigned int		(*empty)(struct list *self);
 
   /* --- Debug --- */
-  void			(*show)(struct list *that, void (*display)(unsigned int n, void *data));
+  void			(*show)(struct list *self, void (*display)(unsigned int n, void *data));
 }			list;
 
 struct list *		new_list(void);
-void			list_init(struct list *that);
-void			list_destroy(struct list *that);
+void			list_init(struct list *self);
+void			list_destroy(struct list *self);
 
 #endif /* _LIST_H_ */

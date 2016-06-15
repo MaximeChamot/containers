@@ -10,23 +10,23 @@ typedef struct		stack
 
   /* Methods */
   /* --- Modifiers --- */
-  void			(*push)(struct stack *that, void *data);
-  void			(*pop)(struct stack *that);
-  void			(*clear)(struct stack *that);
+  void			(*push)(struct stack *self, void *data);
+  void			(*pop)(struct stack *self);
+  void			(*clear)(struct stack *self);
 
   /* --- Element access --- */
-  void *		(*top)(struct stack *that);
+  void *		(*top)(struct stack *self);
 
   /* --- Capacity --- */
-  unsigned int		(*size)(struct stack *that);
-  unsigned int		(*empty)(struct stack *that);
+  unsigned int		(*size)(struct stack *self);
+  unsigned int		(*empty)(struct stack *self);
 
   /* --- Debug --- */
-  void			(*show)(struct stack *that, void(*display)(unsigned int n, void *data));
+  void			(*show)(struct stack *self, void(*display)(unsigned int n, void *data));
 }			stack;
 
 struct stack *		new_stack(void);
-void			stack_init(struct stack *that);
-void			stack_destroy(struct stack *that);
+void			stack_init(struct stack *self);
+void			stack_destroy(struct stack *self);
 
 #endif /* _STACK_H_ */
